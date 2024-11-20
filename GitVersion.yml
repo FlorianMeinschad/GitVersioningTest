@@ -8,7 +8,7 @@ branches:
     increment: Patch
   develop:
     regex: ^dev(elop)?(ment)?$
-    label: beta
+    tag: beta
     increment: None
   bug:
     regex: ^bug?[/-]
