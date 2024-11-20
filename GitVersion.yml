@@ -12,6 +12,7 @@ branches:
   bug:
     regex: ^bug?[/-]
     increment: None
+    source-branches: [ 'develop', 'release' ]
   feature:
     regex: ^features?[/-]
     increment: None
