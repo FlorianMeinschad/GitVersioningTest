@@ -21,13 +21,21 @@ jobs:
      id: gitversion
      uses: gittools/actions/gitversion/execute@a94a3b62ee018ef5346cb08fd0d63d93811fe691
 
+    # action doesn't parse dependency files but instead queries github API and thus needs the repository name
+   - name: Generate dependencies action
+     uses: thedave42/generate-dependencies-csv-action@f33ebe876bf2441535ae36dfddbe126f8ea4c26a
+     with:
+       repo-token: ${{ secrets.GITHUB_TOKEN }}
+       repo-names: ${{ github.event.repository.name }}
+
    - name: Generate checksums
      uses: jmgilman/actions-generate-checksum@v1
      with:
-      output: ${{ steps.gitversion.outputs.semVer }}.txt
+      output: ${{ steps.gitversion.outputs.semVer }}-sha256.txt
       method: sha256
       patterns: |
        *.zip
+       *-dependency-list.csv
 
    - name: Release
      uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191
@@ -39,4 +47,6 @@ jobs:
       fail_on_unmatched_files: true
       prerelease: ${{ steps.gitversion.outputs.preReleaseNumber != null }}
       files: |
-        ${{ steps.gitversion.outputs.semVer }}.txt
+        *.zip
+        *-dependency-list.csv
+        ${{ steps.gitversion.outputs.semVer }}-sha256.txt
