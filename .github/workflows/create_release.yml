@@ -39,4 +39,4 @@ jobs:
       fail_on_unmatched_files: true
       prerelease: ${{ steps.gitversion.outputs.preReleaseNumber != null }}
       files: |
-       *.txt
+        ${{ steps.gitversion.outputs.semVer }}.txt
