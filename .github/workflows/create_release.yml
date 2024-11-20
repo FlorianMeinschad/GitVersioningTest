@@ -9,6 +9,8 @@ jobs:
 
    - name: Checkout Repository
      uses: actions/checkout@v4
+     with:
+       fetch-depth: 0
 
    - name: Setup GitVersion
      uses: gittools/actions/gitversion/setup@a94a3b62ee018ef5346cb08fd0d63d93811fe691

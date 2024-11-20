@@ -18,7 +18,7 @@ branches:
     increment: None
   feature:
     regex: ^features?[/-]
-    label: '{BranchName}'
+    label: beta
     increment: None
   revert:
     regex: ^revert?[/-]
