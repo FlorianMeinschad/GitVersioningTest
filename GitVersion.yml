@@ -2,25 +2,17 @@ mode: ContinuousDelivery
 branches:
   master:
     regex: ^master$|^main$
-    label: ''
     increment: Patch
   release:
     regex: ^releases?[/-]
-    label: beta
     increment: Patch
   develop:
     regex: ^dev(elop)?(ment)?$
-    label: beta
     increment: None
   bug:
     regex: ^bug?[/-]
-    label: beta
     increment: None
+    source-branches: [ 'develop', 'release' ]
   feature:
     regex: ^features?[/-]
-    label: beta
-    increment: None
-  revert:
-    regex: ^revert?[/-]
-    label: beta
     increment: None
