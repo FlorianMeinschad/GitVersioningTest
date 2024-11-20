@@ -1,0 +1,40 @@
+name: Create Release
+on:
+ workflow_dispatch:
+
+jobs:
+ release:
+  runs-on: ubuntu-latest
+  steps:
+
+   - name: Checkout Repository
+     uses: actions/checkout@v4
+
+   - name: Setup GitVersion
+     uses: gittools/actions/gitversion/setup@a94a3b62ee018ef5346cb08fd0d63d93811fe691
+     with:
+       versionSpec: '5.x'
+
+   - name: Determine Version
+     id: gitversion
+     uses: gittools/actions/gitversion/execute@a94a3b62ee018ef5346cb08fd0d63d93811fe691
+
+   - name: Generate checksums
+     uses: jmgilman/actions-generate-checksum@v1
+     with:
+      output: ${{ steps.gitversion.outputs.semVer }}.txt
+      method: sha256
+      patterns: |
+       *.zip
+
+   - name: Release
+     uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191
+     with:
+      name: PSA.Artis2 ${{needs.build-frontend.outputs.gitversion_semver}}
+      tag_name: ${{needs.build-frontend.outputs.gitversion_semver}}
+      target_commitish: ${{ github.sha }}
+      generate_release_notes: true
+      fail_on_unmatched_files: true
+      prerelease: ${{needs.build-frontend.outputs.gitversion_is_prerelease}}
+      files: |
+       *.txt
