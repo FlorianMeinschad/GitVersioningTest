@@ -47,6 +47,5 @@ jobs:
       fail_on_unmatched_files: true
       prerelease: ${{ steps.gitversion.outputs.preReleaseNumber != null }}
       files: |
-        *.zip
         *-dependency-list.csv
         ${{ steps.gitversion.outputs.semVer }}-sha256.txt
