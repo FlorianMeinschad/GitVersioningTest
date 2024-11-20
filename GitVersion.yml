@@ -16,6 +16,3 @@ branches:
   feature:
     regex: ^features?[/-]
     increment: None
-  revert:
-    regex: ^revert?[/-]
-    increment: None
